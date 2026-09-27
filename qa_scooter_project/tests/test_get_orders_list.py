@@ -2,8 +2,10 @@ import requests
 import allure
 from data import URLS
 
-@allure.title("Проверка получения списка заказов") # Проверка: в тело ответа возвращается список заказов
-def test_get_orders_list_success():
+class TestGetOrdersList:
+
+ @allure.title("Проверка получения списка заказов") # Проверка: в тело ответа возвращается список заказов
+ def test_get_orders_list_success(self):
     # Отправляем GET-запрос на получение списка заказов
     response = requests.get(URLS.GET_ORDERS)
     

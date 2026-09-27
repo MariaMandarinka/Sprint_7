@@ -3,14 +3,16 @@ import allure
 import pytest
 from data import URLS
 
+class TestCreateOrder:
+
 # Используем параметризацию для проверки всех вариантов выбора цветов по ТЗ
-@pytest.mark.parametrize("color_option", [
+ @pytest.mark.parametrize("color_option", [
     ["BLACK"],           # 1. Можно указать один из цветов — BLACK
     ["GREY"],            # 2. Можно указать один из цветов — GREY
     ["BLACK", "GREY"],   # 3. Можно указать оба цвета
     []                   # 4. Можно совсем не указывать цвет
 ])
-def test_create_order_with_different_colors_success(color_option):
+ def test_create_order_with_different_colors_success(self, color_option):
     # Тело запроса со всеми обязательными полями по документации
     # Превращаем список цветов в красивую строку для заголовка отчета Allure
     color_name = ", ".join(color_option) if color_option else "без указания цвета"

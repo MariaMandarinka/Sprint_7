@@ -4,8 +4,10 @@ import pytest
 from data import URLS
 from helpers import generate_courier_payload
 
-@allure.title("Успешное создание нового курьера") # 1. Проверка: курьера можно создать, успешный запрос возвращает 201 и {"ok":true}
-def test_create_courier_success():
+class TestCreateCourier:
+
+ @allure.title("Успешное создание нового курьера") # 1. Проверка: курьера можно создать, успешный запрос возвращает 201 и {"ok":true}
+ def test_create_courier_success(self):
     payload = generate_courier_payload()
     
     response = requests.post(URLS.CREATE_COURIER, json=payload)
@@ -16,8 +18,8 @@ def test_create_courier_success():
     assert response.json() == {"ok": True}
 
 
-@allure.title("Ошибка при создании дубликата курьера") # 2. Проверка: нельзя создать двух одинаковых курьеров (с одним логином)
-def test_create_duplicate_courier_error():
+ @allure.title("Ошибка при создании дубликата курьера") # 2. Проверка: нельзя создать двух одинаковых курьеров (с одним логином)
+ def test_create_duplicate_courier_error(self):
     payload = generate_courier_payload()
     
     # Создаем первого курьера
@@ -33,10 +35,10 @@ def test_create_duplicate_courier_error():
     assert second_response.json()["message"] == "Этот логин уже используется. Попробуйте другой."
 
 
-# 3. Проверка: чтобы создать курьера, нужно передать обязательные поля (логин и пароль)
-# Если одного из полей нет, запрос возвращает ошибку 400
-@pytest.mark.parametrize("missing_field", ["login", "password"])
-def test_create_courier_missing_required_field_error(missing_field):
+                                                       # 3. Проверка: чтобы создать курьера, нужно передать обязательные поля (логин и пароль)
+                                                       # Если одного из полей нет, запрос возвращает ошибку 400
+ @pytest.mark.parametrize("missing_field", ["login", "password"])
+ def test_create_courier_missing_required_field_error(self, missing_field):
      # Динамически меняем название теста в отчете в зависимости от пропущенного поля
     allure.dynamic.title(f"Ошибка создания курьера при отсутствии обязательного поля: {missing_field}")
     
